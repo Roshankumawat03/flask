@@ -5,13 +5,15 @@ app = Flask(__name__)
 @app.route("/")
 def hello():
     return f"""<h1>Hello, World!</h1>
-    <a href="{url_for("about")}">About</a>
-    <a href="{url_for("learn_url_for")}">learn Url</a>
+    <a href="{url_for("about_func")}">About</a><br>
+    <a href="{url_for("greet", name="roshan")}">Greet Url</a><br>
+    <a href="{url_for("vote_validation", age="21")}">Age Url</a>
+
     """
 
 
 @app.route("/about")
-def about():
+def about_func():
     return "<h2>This is about page</h2>"
 
 @app.route("/greet/<name>")
@@ -39,4 +41,5 @@ def learn_path(abc):
 
 @app.route("/test_urls")
 def learn_url_for():
-    return url_for("about")
+    return url_for("vote_validation", age="21")
+
