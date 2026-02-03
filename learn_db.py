@@ -25,28 +25,28 @@ u5 = User(is_admin=True, username="sahil", email="sahil@gmail.com", password="12
 u6 = User(is_admin=True, username="sohan", email="sohan@gmail.com", password="12345")
    
 
-with app.app_context():
-    db.create_all()
-    db.session.add(u1)
-    db.session.add(u2)
-    db.session.add(u3)
-    db.session.add(u4)
-    db.session.add(u5)
-    db.session.add(u6)
-    db.session.commit()
+# with app.app_context():
+#     db.create_all()
+#     db.session.add(u1)
+#     db.session.add(u2)
+#     db.session.add(u3)
+#     db.session.add(u4)
+#     db.session.add(u5)
+#     db.session.add(u6)
+#     db.session.commit()
 
 
-with app.app_context():
-    user = User.query.get(1)
-    user.username = "rahul"
-    user.email = "rk@gmail.com"
-    db.session.commit()
+# with app.app_context():
+#     user = User.query.get(1)
+#     user.username = "rahul"
+#     user.email = "rk@gmail.com"
+#     db.session.commit()
 
 
-with app.app_context():
-    user = User.query.get(2)
-    db.session.delete(user)
-    db.session.commit() 
+# with app.app_context():
+#     user = User.query.get(2)
+#     db.session.delete(user)
+#     db.session.commit() 
 
 with app.app_context():
     user = User.query.get(3)
@@ -55,9 +55,9 @@ with app.app_context():
 
 
 
-with app.app_context():
-    db.create_all()
-    for x in range(100):
-        a = Mytable()
-        db.session.add(a)
-    db.session.commit()
+# with app.app_context():
+#     db.create_all()
+#     for x in range(100):
+#         a = Mytable()
+#         db.session.add(a)
+#     db.session.commit()
