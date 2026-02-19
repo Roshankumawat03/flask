@@ -1,5 +1,7 @@
 from . import app, render_template, request, url_for
 from .models import User, database
+from flask_login import login_required, current_user
+import bcrypt
 
 
 @app.route("/register")
@@ -21,7 +23,7 @@ def validate_data():
             name = name,
             email = email,
             username = username,
-            password = password
+            password = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
         )
         if image:
             photo_path = "profilephoto/" + username + ".png"
@@ -36,9 +38,14 @@ def validate_data():
 
 
 @app.route("/get_user_by_id/<int:id>")
+@login_required
 def get_user_by_id(id):
     
     user_info = User.query.get(id)
+
+    if str(user_info.id) != current_user.get_id():
+        return "You are not allowed to see anyone else profile."
+
     return render_template(
         "profile.html",
         name=user_info.name,
@@ -48,11 +55,16 @@ def get_user_by_id(id):
     )
 
 @app.route("/get_user_by_username/<username>")
+@login_required
 def get_user_by_username(username):
     
     user_info = User.query.filter_by(username = username).all()
     if user_info:
         user_info = user_info[0]
+
+        if str(user_info.id) != current_user.get_id():
+            return "You are not allowed to see anyone else profile."
+
         return render_template(
             "profile.html",
             name=user_info.name,
@@ -65,11 +77,16 @@ def get_user_by_username(username):
     
 
 @app.route("/delete_user_by_username/<username>")
+@login_required
 def delete_user_by_username(username):
     
     user_info = User.query.filter_by(username = username).all()
     if user_info:
         user_info = user_info[0]
+
+        if str(user_info.id) != current_user.get_id():
+            return "You are not allowed to see anyone else profile."
+    
         database.session.delete(user_info)
         database.session.commit()
         return "User deleted done."
@@ -85,11 +102,15 @@ def delete_user_by_username(username):
 
 
 @app.route("/update_user_by_username/<username>", methods=["POST"])
+@login_required
 def update_user_by_username(username):
     
     user_info = User.query.filter_by(username = username).all()
     if user_info:
         user_info = user_info[0]
+
+        if str(user_info.id) != current_user.get_id():
+            return "You are not allowed to see anyone else profile."
 
         form_password = request.form.get("password")
         if form_password:

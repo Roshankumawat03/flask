@@ -1,17 +1,18 @@
-from . import app, login_manager
+from . import app, login_manager, UserMixin
 
 from flask_sqlalchemy import SQLAlchemy
 
 database = SQLAlchemy(app)
 
 
-class User(database.Model):
+class User(database.Model, UserMixin):
 
     id = database.Column(database.Integer, primary_key = True)
     username = database.Column(database.String(10), unique=True, nullable=False)
     email = database.Column(database.String(100), unique=True, nullable=False)
     password = database.Column(database.String(30), nullable=False)
     name = database.Column(database.String(200))
+    is_active = database.Column(database.Boolean, default=True)
     profile_photo = database.Column(database.String(200), default= "static/profilephoto/default.png")
 
 
@@ -22,7 +23,6 @@ class User(database.Model):
 with app.app_context():
     database.create_all()
 
-
 @login_manager.user_loader
-def get_user(user_id):
-    return User.query.get(int(user_id))
+def get_user(id):
+    return User.query.get(int(id))
