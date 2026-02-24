@@ -1,5 +1,5 @@
 from flask_login import login_user, logout_user
-from . import app, render_template, request
+from . import app, render_template, request, redirect, url_for, flash
 from .models import User
 import bcrypt
 
@@ -13,14 +13,14 @@ def validate_login_func():
     if user_in_db:
         if bcrypt.checkpw(request.form.get("password").encode(), hashed_password=user_in_db.password):
             login_user(user_in_db)
-            return "Login Done."
         else:
             return "Invalid Password.", 401
     else:
         return "User Not Found.", 409
+    return redirect("/")
     
 
 @app.route("/logout")
 def logout_func():
     logout_user()
-    return "Logout Done."
+    return redirect("/")

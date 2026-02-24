@@ -14,5 +14,10 @@
     <div class="container">
         <p>This is a personal blogging website.</p>
     </div>
+    {% with all_messages = get_flashed_messages() %}
+        {% if all_messages %}
+            {{ all_messages[0] }}
+        {% endif %}    
+    {% endwith %}
 </body>
 </html>

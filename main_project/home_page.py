@@ -1,12 +1,13 @@
-from . import app
+from . import app, render_template, flash
 from flask_login import login_required, current_user
 
 @app.route("/")
 def home():
-    if current_user.is_authenticated:
-        return "Home page from logged in user."
-    else:
-        return "Home Page."
+    # if current_user.is_authenticated:
+    #     return "Home page from logged in user."
+    # else:
+    flash("Hi I am the flashed message.")
+    return render_template("home.html", title = "Home")
 
 @app.route("/about")
 @login_required
@@ -15,4 +16,4 @@ def about():
 
 @app.route("/test")
 def test():
-    return "Test Page."
+    return render_template("test.html", current_user=current_user)
