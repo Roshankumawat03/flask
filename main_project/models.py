@@ -1,8 +1,10 @@
 from . import app, login_manager, UserMixin
+from flask_migrate import Migrate
 
 from flask_sqlalchemy import SQLAlchemy
 
 database = SQLAlchemy(app)
+Migrate = Migrate(app, database)
 
 
 class User(database.Model, UserMixin):
@@ -12,6 +14,7 @@ class User(database.Model, UserMixin):
     email = database.Column(database.String(100), unique=True, nullable=False)
     password = database.Column(database.String(30), nullable=False)
     name = database.Column(database.String(200))
+    mob = database.Column(database.String(10))
     is_active = database.Column(database.Boolean, default=True)
     profile_photo = database.Column(database.String(200), default= "static/profilephoto/default.png")
 

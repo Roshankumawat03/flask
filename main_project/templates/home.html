@@ -16,7 +16,9 @@
     </div>
     {% with all_messages = get_flashed_messages() %}
         {% if all_messages %}
-            {{ all_messages[0] }}
+            {% for x in all_messages %}
+                {{ x }} <br>
+            {% endfor %}
         {% endif %}    
     {% endwith %}
 </body>

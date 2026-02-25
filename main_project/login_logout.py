@@ -17,10 +17,12 @@ def validate_login_func():
             return "Invalid Password.", 401
     else:
         return "User Not Found.", 409
+    flash("Logged in successfully.")
     return redirect("/")
     
 
 @app.route("/logout")
 def logout_func():
     logout_user()
+    flash("Logged out successfully.")
     return redirect("/")

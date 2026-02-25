@@ -6,7 +6,12 @@ def home():
     # if current_user.is_authenticated:
     #     return "Home page from logged in user."
     # else:
-    flash("Hi I am the flashed message.")
+    # flash("Hi I am the flashed message.")
+
+    #/ if current_user.is_authenticated:
+    #     flash("You are logged in.")
+    # else:
+    #     flash("You are not logged in.") /   
     return render_template("home.html", title = "Home")
 
 @app.route("/about")
